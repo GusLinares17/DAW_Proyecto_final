@@ -1,0 +1,31 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+*.log
+
+# Entornos virtuales
+my_env/
+venv/
+.venv/
+env/
+
+# Django static/media
+staticfiles/
+media/
+
+# Node / React
+node_modules/
+dist/
+.vite/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Sistema / editor
+.DS_Store
+.vscode/
+*.swp

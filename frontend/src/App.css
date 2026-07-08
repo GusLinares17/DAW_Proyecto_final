@@ -1,0 +1,295 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 56px 0;
+  flex: 1;
+}
+
+/* Navbar */
+.navbar {
+  background: #fffaf2;
+  border-bottom: 1px solid #eadfce;
+}
+
+.navbar-container {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: #7a2e1d;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.navbar-links a,
+.navbar-links button {
+  background: transparent;
+  border: none;
+  color: #2f2a24;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0;
+}
+
+.navbar-links button:hover {
+  background: transparent;
+  color: #a94f2b;
+}
+
+/* Home */
+.hero {
+  min-height: 55vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.hero-label {
+  color: #a94f2b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  margin: 0;
+  color: #7a2e1d;
+}
+
+.hero h2 {
+  margin: 18px 0 14px;
+  font-size: 1.5rem;
+  color: #2f2a24;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #5f554b;
+}
+
+/* Pages */
+.page-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-section h1,
+.auth-page h1 {
+  color: #7a2e1d;
+  margin-top: 0;
+  margin-bottom: 28px;
+}
+
+/* Menu */
+.menu-list {
+  display: grid;
+  gap: 34px;
+}
+
+.menu-category {
+  background: #fffaf2;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.menu-category h2 {
+  margin: 0 0 8px;
+  color: #2f2a24;
+}
+
+.menu-category > p {
+  margin: 0 0 20px;
+  color: #6f6255;
+}
+
+.menu-items {
+  display: grid;
+  gap: 14px;
+}
+
+.menu-card {
+  background: #ffffff;
+  border: 1px solid #eee2d2;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.menu-card h3 {
+  margin: 0 0 6px;
+  color: #2f2a24;
+}
+
+.menu-card p {
+  margin: 0;
+  color: #6f6255;
+}
+
+.menu-card strong {
+  color: #a94f2b;
+  white-space: nowrap;
+}
+
+/* Forms */
+.auth-page {
+  display: flex;
+  justify-content: center;
+}
+
+.form-card {
+  width: min(520px, 100%);
+  background: #fffaf2;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  padding: 32px;
+}
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2f2a24;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d8c8b6;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f2a24;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #c98255;
+  border-color: #c98255;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 20px;
+  background: #7a2e1d;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #a94f2b;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-link {
+  margin-top: 20px;
+  color: #6f6255;
+}
+
+.form-link a {
+  color: #7a2e1d;
+  font-weight: 700;
+}
+
+/* Reservations */
+.reservation-list {
+  display: grid;
+  gap: 18px;
+}
+
+.reservation-card {
+  background: #fffaf2;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.reservation-card h2 {
+  margin: 0 0 16px;
+  color: #7a2e1d;
+}
+
+.reservation-info {
+  display: grid;
+  gap: 8px;
+}
+
+.reservation-info p {
+  margin: 0;
+  color: #4f463e;
+}
+
+/* Footer */
+.footer {
+  background: #2f2a24;
+  color: #f7f3ec;
+  text-align: center;
+  padding: 26px 16px;
+}
+
+.footer p {
+  margin: 4px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .navbar-container {
+    align-items: flex-start;
+    gap: 14px;
+    flex-direction: column;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .menu-card {
+    flex-direction: column;
+  }
+
+  .form-card {
+    padding: 24px;
+  }
+}
