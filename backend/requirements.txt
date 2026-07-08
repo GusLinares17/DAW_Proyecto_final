@@ -5,7 +5,9 @@ django-extensions==4.1
 django-filter==25.2
 djangorestframework==3.17.1
 djangorestframework_simplejwt==5.5.1
+gunicorn==26.0.0
 Markdown==3.10.2
+packaging==26.2
 pydot==4.0.1
 PyJWT==2.13.0
 pyparsing==3.3.2
