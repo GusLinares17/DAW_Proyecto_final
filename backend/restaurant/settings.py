@@ -5,6 +5,11 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# =========================
+# Seguridad y entorno
+# =========================
+
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
     'django-insecure-*pk!3zg(=aeuz0acsle^%j&o-0fd-v==g26*x_2u&ah2h)xb6_'
@@ -23,26 +28,47 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
-INSTALLED_APPS = [
+# =========================
+# Aplicaciones
+# =========================
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
+LOCAL_APPS = [
     'apps.management',
+]
+
+THIRD_PARTY_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
 ]
 
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
+
+# =========================
+# Django REST Framework
+# =========================
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+
+
+# =========================
+# Middleware
+# =========================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,7 +85,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# =========================
+# URLs y WSGI
+# =========================
+
 ROOT_URLCONF = 'restaurant.urls'
+
+WSGI_APPLICATION = 'restaurant.wsgi.application'
+
+
+# =========================
+# Templates
+# =========================
 
 TEMPLATES = [
     {
@@ -76,7 +114,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'restaurant.wsgi.application'
+
+# =========================
+# Base de datos
+# =========================
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -84,6 +125,11 @@ DATABASES = {
         conn_max_age=600,
     )
 }
+
+
+# =========================
+# Validación de contraseñas
+# =========================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,6 +146,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# =========================
+# Internacionalización
+# =========================
+
 LANGUAGE_CODE = 'es-pe'
 
 TIME_ZONE = 'America/Lima'
@@ -108,10 +159,20 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# =========================
+# Archivos estáticos
+# =========================
+
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =========================
+# CORS
+# =========================
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
