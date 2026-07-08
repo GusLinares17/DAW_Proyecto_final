@@ -9,8 +9,8 @@ El sistema permite administrar reservas de un restaurante mediante una arquitect
 ## Integrantes
 
 - Gustavo Linares Aquino
-- (Nombre integrante 2)
-- (Nombre integrante 3)
+- Geisel Reymar Pacheco
+- Jesús Francisco Silva Pino
 
 ---
 
