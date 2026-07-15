@@ -54,7 +54,7 @@ export async function createReservation(
   return response.json()
 }
 
-export async function deleteReservation(id: number) {
+export async function deleteReservation(id: string | number) {
   const token = localStorage.getItem('access');
   const response = await fetch(`${import.meta.env.VITE_API_URL}/reservations/${id}/`, {
     method: 'DELETE',
@@ -67,7 +67,7 @@ export async function deleteReservation(id: number) {
   return true;
 }
 
-export async function updateReservation(id: number, data: any) {
+export async function updateReservation(id: string | number, data: any) {
   const token = localStorage.getItem('access');
   const response = await fetch(`${import.meta.env.VITE_API_URL}/reservations/${id}/`, {
     method: 'PATCH',
