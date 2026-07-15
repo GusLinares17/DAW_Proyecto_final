@@ -1,38 +1,36 @@
-import { MenuItemCard } from '../components/MenuItemCard'
-import { useMenuCategories } from '../hooks/useMenuCategory'
+import { useMenuCategories } from '../hooks/useMenuCategory';
+import styles from './MenuPage.module.css';
 
-export function MenuPage() {
-  const { data: categories, isLoading, isError } = useMenuCategories()
+export const MenuPage = () => {
+  const { data: categories, isLoading } = useMenuCategories();
 
-  if (isLoading) {
-    return <p>Cargando menú...</p>
-  }
-
-  if (isError) {
-    return <p>Error al cargar el menú.</p>
-  }
+  if (isLoading) return <div className={styles.loadingScreen}>Cargando los sabores...</div>;
 
   return (
-    <section className="page-section">
-      <h1>Nuestro menú</h1>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1>La Carta</h1>
+        <p>Una selección cuidadosa de nuestra mejor gastronomía.</p>
+      </div>
 
-      <div className="menu-list">
-        {categories?.map((category) => (
-          <section key={category.id} className="menu-category">
+      <div className={styles.grid}>
+        {categories?.map((category: any) => (
+          <div key={category.id} className={styles.category}>
             <h2>{category.name}</h2>
-
-            {category.description && (
-              <p>{category.description}</p>
-            )}
-
-            <div className="menu-items">
-              {category.items.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
+            <div>
+              {category.items?.map((item: any) => (
+                <div key={item.id} className={styles.itemRow}>
+                  <div className={styles.itemInfo}>
+                    <span className={styles.itemName}>{item.name}</span>
+                    <span className={styles.itemDescription}>{item.description}</span>
+                  </div>
+                  <span className={styles.itemPrice}>S/ {item.price}</span>
+                </div>
               ))}
             </div>
-          </section>
+          </div>
         ))}
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};

@@ -1,0 +1,26 @@
+.container {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #FDFBF7;
+}
+
+.title {
+    font-family: 'Times New Roman', serif;
+    color: #8B3A3A;
+    font-size: 2.5rem;
+}
+
+.description {
+    max-width: 600px;
+    margin: 20px auto;
+    line-height: 1.8;
+    color: #444;
+}
+
+.image {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

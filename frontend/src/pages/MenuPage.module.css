@@ -1,0 +1,80 @@
+.container {
+    padding: 60px 20px;
+    background-color: #FDFBF7;
+    min-height: 100vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.header h1 {
+    font-family: 'Times New Roman', serif;
+    color: #8B3A3A;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #555;
+}
+
+.grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.category h2 {
+    font-family: 'Times New Roman', serif;
+    border-bottom: 1px solid #EAEAEA;
+    padding-bottom: 10px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.itemRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.itemName {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.itemDescription {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.itemPrice {
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: #8B3A3A;
+}
+
+.loadingScreen {
+    text-align: center;
+    padding: 100px;
+    background-color: #FDFBF7;
+    min-height: 80vh;
+    color: #555;
+}

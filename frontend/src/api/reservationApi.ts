@@ -53,3 +53,31 @@ export async function createReservation(
 
   return response.json()
 }
+
+export async function deleteReservation(id: string | number) {
+  const token = localStorage.getItem('access');
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/reservations/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) throw new Error('Error al cancelar la reserva');
+  return true;
+}
+
+export async function updateReservation(id: string | number, data: any) {
+  const token = localStorage.getItem('access');
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/reservations/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) throw new Error('Error al modificar la reserva');
+  return response.json();
+}

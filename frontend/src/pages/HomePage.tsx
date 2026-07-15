@@ -1,16 +1,23 @@
+import { Link } from 'react-router-dom';
+import styles from './HomePage.module.css';
+
 export function HomePage() {
   return (
-    <section className="hero">
-      <p className="hero-label">Restaurante</p>
+    <section className={styles.heroSection}>
+      <div className={styles.overlay}></div>
 
-      <h1>Sabor Peruano</h1>
+      <div className={styles.content}>
+        <p className={styles.preTitle}>Experiencia Culinaria</p>
+        <h1 className={styles.mainTitle}>Sabor Peruano</h1>
+        <h2 className={styles.subtitle}>
+          Descubre la auténtica gastronomía de nuestra tierra, respetando las recetas ancestrales en cada plato.
+        </h2>
 
-      <h2>Gastronomía peruana</h2>
-
-      <p>
-        Disfruta de una selección de los mejores platos de la gastronomía
-        peruana y reserva tu mesa de forma rápida y sencilla.
-      </p>
+        <div className={styles.buttonGroup}>
+          <Link to="/menu" className={styles.btnPrimary}>Ver la Carta</Link>
+          <Link to="/reservations/new" className={styles.btnSecondary}>Reservar Mesa</Link>
+        </div>
+      </div>
     </section>
-  )
+  );
 }

@@ -1,0 +1,85 @@
+.container {
+    padding: 60px 20px;
+    background-color: #FDFBF7;
+    min-height: 80vh;
+    position: relative;
+}
+
+.title {
+    text-align: center;
+    color: #8B3A3A;
+    font-family: serif;
+}
+
+.form {
+    max-width: 500px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline-color: #8B3A3A;
+}
+
+.inputReadonly {
+    background-color: #EAEAEA;
+    color: #666;
+    outline: none;
+}
+
+.submitBtn {
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #8B3A3A;
+    color: white;
+    padding: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 3px;
+}
+
+.notification {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-family: monospace;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.success {
+    background-color: #2e7d32;
+}
+
+.error {
+    background-color: #d32f2f;
+}
