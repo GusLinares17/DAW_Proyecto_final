@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './CuentaPage.module.css';
 
 export const CuentaPage = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
@@ -45,8 +48,12 @@ export const CuentaPage = () => {
 
             localStorage.setItem('user', JSON.stringify(formData));
             window.dispatchEvent(new Event('auth-change'));
-            setNotification({ show: true, message: 'Perfil actualizado con éxito en la base de datos.', type: 'success' });
-            setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
+            
+            setNotification({ show: true, message: 'Perfil actualizado con éxito.', type: 'success' });
+            
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
 
         } catch (error) {
             console.error(error);
