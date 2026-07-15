@@ -17,8 +17,11 @@ export interface LoginData {
 }
 
 export interface LoginResponse {
+  names: any
   access: string
   refresh: string
+  username?: string
+  first_name?: string
 }
 
 export async function registerUser(data: RegisterData) {

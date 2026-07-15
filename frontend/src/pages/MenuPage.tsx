@@ -1,38 +1,37 @@
-import { MenuItemCard } from '../components/MenuItemCard'
-import { useMenuCategories } from '../hooks/useMenuCategory'
+import '../App.css';
+// Reemplaza esto con tu hook real
+import { useMenuCategories } from '../hooks/useMenuCategory';
 
-export function MenuPage() {
-  const { data: categories, isLoading, isError } = useMenuCategories()
+export const MenuPage = () => {
+  const { data: categories, isLoading } = useMenuCategories();
 
-  if (isLoading) {
-    return <p>Cargando menú...</p>
-  }
-
-  if (isError) {
-    return <p>Error al cargar el menú.</p>
-  }
+  if (isLoading) return <div className="loading-screen">Cargando los sabores...</div>;
 
   return (
-    <section className="page-section">
-      <h1>Nuestro menú</h1>
+    <div className="menu-page-container">
+      <div className="menu-header">
+        <h1>La Carta</h1>
+        <p>Una selección cuidadosa de nuestra mejor gastronomía.</p>
+      </div>
 
-      <div className="menu-list">
-        {categories?.map((category) => (
-          <section key={category.id} className="menu-category">
+      <div className="menu-grid">
+        {categories?.map((category: any) => (
+          <div key={category.id} className="menu-category">
             <h2>{category.name}</h2>
-
-            {category.description && (
-              <p>{category.description}</p>
-            )}
-
-            <div className="menu-items">
-              {category.items.map((item) => (
-                <MenuItemCard key={item.id} item={item} />
+            <div className="menu-items-list">
+              {category.items?.map((item: any) => (
+                <div key={item.id} className="menu-item-row">
+                  <div className="item-info">
+                    <span className="item-name">{item.name}</span>
+                    <span className="item-description">{item.description}</span>
+                  </div>
+                  <span className="item-price">S/ {item.price}</span>
+                </div>
               ))}
             </div>
-          </section>
+          </div>
         ))}
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};

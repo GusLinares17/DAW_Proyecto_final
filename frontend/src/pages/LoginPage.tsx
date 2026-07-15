@@ -30,6 +30,20 @@ export function LoginPage() {
     loginMutation.mutate(form, {
       onSuccess: (data) => {
         saveTokens(data.access, data.refresh)
+
+        localStorage.setItem('user', JSON.stringify({
+          username: data.username,
+          first_name: data.first_name,
+          names: data.names,
+          father_surname: data.father_surname,
+          mother_surname: data.mother_surname,
+          email: data.email,
+          dni: data.dni,
+          phone: data.phone
+        }))
+
+        window.dispatchEvent(new Event('auth-change'));
+
         navigate(from, { replace: true })
       },
     })
