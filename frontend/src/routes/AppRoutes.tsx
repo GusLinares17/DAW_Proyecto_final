@@ -5,6 +5,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 
 import { CocinaPage } from '../pages/CocinaPage'
 import { CuentaPage } from '../pages/CuentaPage'
+import { EditReservationPage } from '../pages/EditReservationPage'
 import { EquipoPage } from '../pages/EquipoPage'
 import { EventosPage } from '../pages/EventosPage'
 import { ExperienciasPage } from '../pages/ExperienciasPage'
@@ -32,6 +33,7 @@ export default function AppRoutes() {
           <Route path="/eventos" element={<EventosPage />} />
           <Route path="/equipo" element={<EquipoPage />} />
           <Route path="/cuenta" element={<CuentaPage />} />
+          <Route path="/editar-reserva/:id" element={<EditReservationPage />} />
 
 
           {/* Rutas protegidas */}
