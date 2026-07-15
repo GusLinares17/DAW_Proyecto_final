@@ -17,11 +17,16 @@ export interface LoginData {
 }
 
 export interface LoginResponse {
-  names: any
-  access: string
-  refresh: string
-  username?: string
-  first_name?: string
+  access: string;
+  refresh: string;
+  username: string;
+  first_name?: string;
+  names?: string;
+  father_surname?: string;
+  mother_surname?: string;
+  email?: string;
+  dni?: string;
+  phone?: string;
 }
 
 export async function registerUser(data: RegisterData) {
