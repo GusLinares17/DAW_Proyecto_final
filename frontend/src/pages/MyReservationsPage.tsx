@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteReservation } from '../api/reservationApi';
+import styles from './MyReservationsPage.module.css';
 
 export const MyReservationsPage = () => {
   const [reservations, setReservations] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [notification, setNotification] = useState({ show: false, message: '', type: '' });
 
   const fetchMyReservations = async () => {
@@ -25,18 +25,14 @@ export const MyReservationsPage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchMyReservations();
-  }, []);
+  useEffect(() => { fetchMyReservations(); }, []);
 
   const handleCancel = async (id: string | number) => {
     const isConfirmed = window.confirm("¿Estás seguro de que deseas cancelar esta reserva?");
     if (!isConfirmed) return;
-
     try {
       await deleteReservation(id);
       setReservations(reservations.filter(res => res.id !== id));
-
       setNotification({ show: true, message: 'Reserva cancelada exitosamente.', type: 'success' });
       setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
     } catch (error) {
@@ -45,62 +41,40 @@ export const MyReservationsPage = () => {
     }
   };
 
-  if (isLoading) {
-    return <div style={{ textAlign: 'center', padding: '100px', backgroundColor: '#FDFBF7', minHeight: '80vh' }}>Cargando tus reservas...</div>;
-  }
+  if (isLoading) return <div className={styles.loading}>Cargando tus reservas...</div>;
 
   return (
-    <div style={{ padding: '60px 20px', backgroundColor: '#FDFBF7', minHeight: '80vh', position: 'relative' }}>
-
+    <div className={styles.container}>
       {notification.show && (
-        <div style={{
-          position: 'fixed', top: '100px', left: '50%', transform: 'translateX(-50%)',
-          backgroundColor: notification.type === 'success' ? '#2e7d32' : '#d32f2f',
-          color: 'white', padding: '12px 24px', borderRadius: '4px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-          zIndex: 1000, fontFamily: 'monospace', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '10px',
-          animation: 'fadeInOut 3s ease-in-out'
-        }}>
+        <div className={`${styles.notification} ${notification.type === 'success' ? styles.success : styles.error}`}>
           {notification.type === 'success' ? '✓' : '⚠'} {notification.message}
         </div>
       )}
 
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <h1 style={{ fontFamily: 'Times New Roman, serif', color: '#8B3A3A', fontSize: '2.5rem', marginBottom: '30px', borderBottom: '1px solid #EAEAEA', paddingBottom: '10px' }}>Mis Reservas</h1>
+      <div className={styles.innerBox}>
+        <h1 className={styles.title}>Mis Reservas</h1>
 
         {reservations.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #EAEAEA' }}>
-            <p style={{ color: '#666', fontSize: '1.1rem', marginBottom: '20px' }}>Aún no tienes reservas con nosotros.</p>
-            <Link to="/reservations/new" className="btn-reservar">Hacer una reserva</Link>
+          <div className={styles.emptyState}>
+            <p>Aún no tienes reservas con nosotros.</p>
+            <Link to="/reservations/new" className={styles.btnReservar}>Hacer una reserva</Link>
           </div>
         ) : (
-          <div style={{ display: 'grid', gap: '20px' }}>
+          <div className={styles.grid}>
             {reservations.map((res) => (
-              <div key={res.id} style={{ backgroundColor: '#fff', border: '1px solid #EAEAEA', borderRadius: '4px', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-
+              <div key={res.id} className={styles.card}>
                 <div>
-                  <h3 style={{ margin: '0 0 10px 0', color: '#333', fontFamily: 'serif', fontSize: '1.4rem' }}>Reserva para {res.guests || res.number_of_people} personas</h3>
-                  <div style={{ color: '#666', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <h3 className={styles.cardTitle}>Reserva para {res.guests || res.number_of_people} personas</h3>
+                  <div className={styles.cardDetails}>
                     <span><strong>Fecha:</strong> {res.reservation_date || res.date}</span>
                     <span><strong>Hora:</strong> {res.reservation_time || res.time}</span>
                     <span><strong>Mesa:</strong> {res.table_detail?.number ? `Mesa #${res.table_detail.number}` : 'Asignación pendiente'}</span>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <Link
-                    to={`/editar-reserva/${res.id}`}
-                    style={{ backgroundColor: '#EAEAEA', color: '#333', border: 'none', padding: '8px 16px', cursor: 'pointer', fontFamily: 'monospace', textTransform: 'uppercase', fontSize: '0.8rem', textAlign: 'center', textDecoration: 'none' }}
-                  >
-                    Modificar
-                  </Link>
-                  <button
-                    onClick={() => handleCancel(res.id)}
-                    style={{ backgroundColor: 'transparent', color: '#d32f2f', border: '1px solid #d32f2f', padding: '8px 16px', cursor: 'pointer', fontFamily: 'monospace', textTransform: 'uppercase', fontSize: '0.8rem', transition: 'all 0.2s' }}
-                    onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#d32f2f'; e.currentTarget.style.color = '#fff'; }}
-                    onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#d32f2f'; }}
-                  >
-                    Cancelar
-                  </button>
+                <div className={styles.btnGroup}>
+                  <Link to={`/editar-reserva/${res.id}`} className={styles.btnModify}>Modificar</Link>
+                  <button onClick={() => handleCancel(res.id)} className={styles.btnCancel}>Cancelar</button>
                 </div>
               </div>
             ))}

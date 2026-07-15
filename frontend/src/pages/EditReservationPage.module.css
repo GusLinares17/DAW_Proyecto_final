@@ -1,0 +1,113 @@
+.container {
+    padding: 60px 20px;
+    background-color: #FDFBF7;
+    min-height: 80vh;
+    position: relative;
+}
+
+.loading {
+    padding: 100px;
+    text-align: center;
+    background-color: #FDFBF7;
+    min-height: 80vh;
+}
+
+.formBox {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid #EAEAEA;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+    font-family: 'Times New Roman', serif;
+    color: #8B3A3A;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color: #8B3A3A;
+}
+
+.buttonsRow {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.saveBtn {
+    flex: 1;
+    background-color: #8B3A3A;
+    color: white;
+    padding: 14px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+}
+
+.cancelBtn {
+    flex: 1;
+    background-color: #EAEAEA;
+    color: #333;
+    padding: 14px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+}
+
+.notification {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-family: monospace;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeInOut 1.5s ease-in-out;
+}
+
+.success {
+    background-color: #2e7d32;
+}
+
+.error {
+    background-color: #d32f2f;
+}

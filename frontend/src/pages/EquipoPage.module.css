@@ -1,0 +1,54 @@
+.container {
+    background-color: #FDFBF7;
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+.header {
+    text-align: center;
+    padding-top: 60px;
+    margin-bottom: 40px;
+}
+
+.title {
+    font-family: 'Times New Roman', serif;
+    color: #8B3A3A;
+    font-size: 3rem;
+}
+
+.subtitle {
+    color: #555;
+}
+
+.grid {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.member {
+    text-align: center;
+}
+
+.image {
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border: 4px solid #EAEAEA;
+}
+
+.name {
+    margin-top: 20px;
+    color: #8B3A3A;
+    font-family: serif;
+    font-size: 1.5rem;
+}
+
+.role {
+    color: #555;
+    font-style: italic;
+    letter-spacing: 1px;
+}

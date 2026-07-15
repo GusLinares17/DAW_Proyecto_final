@@ -1,0 +1,79 @@
+.container {
+    padding: 80px 20px;
+    background-color: #FDFBF7;
+    min-height: 80vh;
+    text-align: center;
+}
+
+.title {
+    font-family: 'Times New Roman', serif;
+    color: #8B3A3A;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.description {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #EAEAEA;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cardTitle {
+    color: #333;
+    font-family: serif;
+    border-bottom: 2px solid #8B3A3A;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.eventBlock {
+    text-align: left;
+    margin-top: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.eventBlockLast {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.eventTitle {
+    color: #8B3A3A;
+    margin: 0 0 5px 0;
+}
+
+.eventTime {
+    color: #777;
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+}
+
+.eventText {
+    color: #444;
+    margin-top: 10px;
+}
+
+.btnAction {
+    margin-top: 15px;
+    background-color: #8B3A3A;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: monospace;
+    text-transform: uppercase;
+}
