@@ -480,3 +480,206 @@ python manage.py bootstrap
 > Las credenciales mostradas son únicamente un ejemplo para desarrollo local y no deben utilizarse en producción.
 
 ---
+
+# Aplicación desplegada
+
+## Frontend
+
+```text
+https://daw-proyecto-final-navy.vercel.app/
+```
+
+## Backend
+
+```text
+https://sabor-peruano-backend.onrender.com/
+```
+
+## API REST
+
+```text
+https://sabor-peruano-backend.onrender.com/api/
+```
+
+## Panel de administración
+
+```text
+https://sabor-peruano-backend.onrender.com/admin/
+```
+
+> El servicio gratuito de Render puede tardar algunos segundos en responder después de un periodo de inactividad.
+
+---
+
+# Despliegue
+
+## Backend en Render
+
+El backend está desplegado en Render y utiliza Gunicorn como servidor WSGI.
+
+Durante el proceso de construcción, Render ejecuta el archivo:
+
+```text
+backend/build.sh
+```
+
+El archivo contiene los siguientes comandos:
+
+```bash
+pip install -r requirements.txt
+python manage.py collectstatic --no-input
+python manage.py migrate
+python manage.py bootstrap
+```
+
+Estos comandos realizan las siguientes tareas:
+
+1. Instalan las dependencias del backend.
+2. Reúnen los archivos estáticos de Django.
+3. Aplican las migraciones de la base de datos.
+4. Crean o actualizan los datos iniciales del sistema.
+
+En Render deben configurarse de forma segura las siguientes variables:
+
+```text
+SECRET_KEY
+DEBUG=False
+DATABASE_URL
+FRONTEND_URL
+DJANGO_SUPERUSER_USERNAME
+DJANGO_SUPERUSER_EMAIL
+DJANGO_SUPERUSER_PASSWORD
+```
+
+La variable `RENDER_EXTERNAL_HOSTNAME` es proporcionada automáticamente por Render y se utiliza para añadir el dominio del servicio a `ALLOWED_HOSTS`.
+
+---
+
+## Frontend en Vercel
+
+El frontend está desplegado en Vercel.
+
+La variable de entorno configurada en producción es:
+
+```text
+VITE_API_URL=https://sabor-peruano-backend.onrender.com/api
+```
+
+Vercel instala las dependencias, compila el proyecto y publica el contenido generado por Vite.
+
+El comando de compilación definido en `package.json` es:
+
+```bash
+npm run build
+```
+
+Este comando ejecuta:
+
+```text
+tsc -b && vite build
+```
+
+---
+
+# Comandos disponibles
+
+## Backend
+
+```bash
+python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py bootstrap
+python manage.py createsuperuser
+```
+
+## Frontend
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run preview
+```
+
+---
+
+# Archivos no incluidos en Git
+
+El repositorio no almacena archivos generados localmente, dependencias instaladas ni información privada.
+
+Entre los archivos y carpetas ignorados se encuentran:
+
+```text
+my_env/
+venv/
+.venv/
+node_modules/
+dist/
+.vite/
+__pycache__/
+db.sqlite3
+*.sqlite3
+staticfiles/
+media/
+.env
+.env.local
+.env.*.local
+```
+
+Estos archivos se excluyen mediante `.gitignore`.
+
+El archivo:
+
+```text
+frontend/.env.example
+```
+
+sí se incluye porque sirve como referencia para crear el archivo `.env` local y no contiene credenciales privadas.
+
+---
+
+# Prueba rápida del sistema
+
+Para comprobar el funcionamiento del proyecto localmente:
+
+1. Ejecutar el backend en `http://127.0.0.1:8000/`.
+2. Ejecutar el frontend en `http://localhost:5173/`.
+3. Abrir el frontend en el navegador.
+4. Registrar un usuario.
+5. Iniciar sesión.
+6. Consultar la carta.
+7. Crear una reserva.
+8. Consultar las reservas del usuario.
+9. Editar una reserva.
+10. Revisar los datos desde Django Admin.
+
+También puede verificarse directamente la API desde:
+
+```text
+http://127.0.0.1:8000/api/
+```
+
+---
+
+# Buenas prácticas aplicadas
+
+- Separación entre backend y frontend.
+- Uso de arquitectura cliente-servidor.
+- API REST con Django REST Framework.
+- Autenticación mediante JWT.
+- Protección de rutas privadas en React.
+- Variables sensibles fuera del repositorio.
+- Uso de `.env.example` como referencia.
+- Base de datos SQLite en desarrollo y PostgreSQL en producción.
+- Uso de ramas y Pull Requests en GitHub.
+- Despliegue independiente del frontend y backend.
+- Inicialización automática de datos mediante un comando personalizado.
+
+---
+
+# Licencia
+
+Proyecto desarrollado con fines académicos para el curso **Desarrollo de Aplicaciones Web**.
+
+---
