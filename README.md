@@ -322,3 +322,161 @@ En producción se recomienda configurar, como mínimo, las siguientes variables:
 > El backend no utiliza un archivo `.env`; las variables se leen directamente desde el entorno del sistema o desde Render.
 
 ---
+
+# Funcionalidades
+
+El sistema incluye las siguientes funcionalidades:
+
+- Registro de usuarios y creación de su perfil de cliente.
+- Inicio de sesión mediante autenticación JWT.
+- Renovación del token de acceso.
+- Consulta de categorías del menú.
+- Consulta de platos disponibles.
+- Consulta de mesas del restaurante.
+- Creación de reservas.
+- Consulta de reservas del usuario autenticado.
+- Edición de reservas.
+- Visualización de información de la cuenta.
+- Protección de rutas privadas.
+- Administración de datos mediante Django Admin.
+- Inicialización de categorías, platos, mesas y usuario administrador.
+
+---
+
+# API REST
+
+La API REST se encuentra disponible localmente en:
+
+```text
+http://127.0.0.1:8000/api/
+```
+
+## Endpoints de autenticación
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `POST` | `/api/register/` | Registra un usuario y crea su perfil de cliente. |
+| `POST` | `/api/token/` | Obtiene los tokens `access` y `refresh`. |
+| `POST` | `/api/token/refresh/` | Genera un nuevo token de acceso mediante el token de renovación. |
+
+---
+
+## Endpoints principales
+
+| Endpoint | Recurso |
+|----------|---------|
+| `/api/menu-categories/` | Categorías del menú. |
+| `/api/menu-items/` | Platos del restaurante. |
+| `/api/customers/` | Clientes registrados. |
+| `/api/tables/` | Mesas del restaurante. |
+| `/api/reservations/` | Reservas. |
+
+Los métodos disponibles para cada recurso dependen de la configuración y los permisos definidos en su respectivo `ViewSet`.
+
+---
+
+# Autenticación JWT
+
+El sistema utiliza JSON Web Tokens para autenticar a los usuarios.
+
+Al iniciar sesión, el backend devuelve:
+
+- `access`: token utilizado para acceder a los recursos protegidos.
+- `refresh`: token utilizado para solicitar un nuevo token de acceso.
+
+Además de los tokens, la respuesta del inicio de sesión incluye información básica del usuario y de su perfil de cliente.
+
+El frontend almacena los tokens y los utiliza en las solicitudes privadas hacia la API.
+
+---
+
+# Rutas del frontend
+
+## Rutas públicas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Página principal. |
+| `/menu` | Carta del restaurante. |
+| `/login` | Inicio de sesión. |
+| `/register` | Registro de usuario. |
+| `/cocina` | Información sobre la cocina. |
+| `/experiencias` | Información sobre experiencias. |
+| `/eventos` | Información sobre eventos. |
+| `/equipo` | Información sobre el equipo. |
+| `/cuenta` | Información de la cuenta. |
+| `/editar-reserva/:id` | Edición de una reserva. |
+
+## Rutas protegidas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/reservations/new` | Creación de una nueva reserva. |
+| `/my-reservations` | Consulta de reservas del usuario autenticado. |
+
+Las rutas protegidas solo pueden ser utilizadas cuando existe una sesión válida.
+
+> Actualmente, `/cuenta` y `/editar-reserva/:id` están definidas como rutas públicas en el código del frontend. Si posteriormente se desea restringir su acceso, deben moverse dentro del componente `ProtectedRoute`.
+
+---
+
+# Datos iniciales
+
+El backend incluye el comando personalizado:
+
+```bash
+python manage.py bootstrap
+```
+
+Este comando crea o actualiza:
+
+- Un usuario administrador.
+- Categorías del menú.
+- Platos iniciales.
+- Mesas iniciales.
+
+Las categorías creadas son:
+
+- Entradas.
+- Platos principales.
+- Bebidas.
+- Postres.
+
+También se agregan platos representativos, como:
+
+- Papa a la huancaína.
+- Ocopa.
+- Lomo saltado.
+- Ají de gallina.
+- Arroz con mariscos.
+- Chicha morada.
+- Limonada.
+- Mazamorra morada.
+
+El comando utiliza `update_or_create`, por lo que puede ejecutarse varias veces sin duplicar los registros configurados.
+
+## Crear el administrador local
+
+Antes de ejecutar `bootstrap`, pueden definirse las credenciales del administrador.
+
+### Linux / WSL
+
+```bash
+export DJANGO_SUPERUSER_USERNAME=admin
+export DJANGO_SUPERUSER_EMAIL=admin@saborperuano.com
+export DJANGO_SUPERUSER_PASSWORD=Admin123456
+python manage.py bootstrap
+```
+
+### Windows PowerShell
+
+```powershell
+$env:DJANGO_SUPERUSER_USERNAME="admin"
+$env:DJANGO_SUPERUSER_EMAIL="admin@saborperuano.com"
+$env:DJANGO_SUPERUSER_PASSWORD="Admin123456"
+python manage.py bootstrap
+```
+
+> Las credenciales mostradas son únicamente un ejemplo para desarrollo local y no deben utilizarse en producción.
+
+---
