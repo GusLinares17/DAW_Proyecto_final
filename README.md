@@ -1,12 +1,14 @@
-# Sistema de Gestión de Restaurante
+# Sabor Peruano — Sistema de Gestión de Restaurante
 
 Proyecto final del curso **Desarrollo de Aplicaciones Web**.
 
-El sistema permite administrar reservas de un restaurante mediante una arquitectura cliente-servidor utilizando Django REST Framework como backend y React + Vite como frontend.
+Sabor Peruano es una aplicación web desarrollada bajo una arquitectura cliente-servidor que permite gestionar las reservas de un restaurante. El sistema ofrece funcionalidades para registrar usuarios, autenticarse mediante JSON Web Tokens (JWT), consultar el menú, visualizar mesas disponibles y administrar reservas.
+
+El backend fue desarrollado utilizando **Django REST Framework**, mientras que el frontend fue implementado con **React**, **Vite** y **TypeScript**, comunicándose mediante una API REST.
 
 ---
 
-## Integrantes
+# Integrantes
 
 - Gustavo Linares Aquino
 - Geisel Reymar Pacheco
@@ -18,101 +20,97 @@ El sistema permite administrar reservas de un restaurante mediante una arquitect
 
 ## Backend
 
-- Python
-- Django
+- Python 3
+- Django 6
 - Django REST Framework
 - Simple JWT
+- django-filter
+- django-cors-headers
+- Gunicorn
+- WhiteNoise
 
 ## Frontend
 
 - React
 - Vite
-- React Router
-- TanStack Query
 - TypeScript
+- React Router DOM
+- TanStack Query
+
+## Base de datos
+
+- SQLite (desarrollo local)
+- PostgreSQL / Supabase (producción)
+
+---
+
+# Arquitectura del sistema
+
+```text
+                Usuario
+                   │
+                   ▼
+        React + Vite + TypeScript
+                   │
+                   ▼
+           TanStack Query
+                   │
+                   ▼
+       Django REST Framework
+                   │
+                   ▼
+   SQLite / PostgreSQL (Supabase)
+```
+
+El frontend consume los servicios expuestos por la API REST del backend. Django procesa las solicitudes, aplica la autenticación mediante JWT y administra el acceso a la base de datos.
 
 ---
 
 # Estructura del proyecto
 
-```
-restaurant-management/
+```text
+DAW_Proyecto_final/
 │
 ├── backend/
+│   ├── apps/
+│   ├── restaurant/
+│   ├── templates/
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── build.sh
 │
-└── frontend/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   ├── types/
+│   │   └── utils/
+│   │
+│   ├── package.json
+│   ├── .env.example
+│   └── vite.config.ts
+│
+├── .gitignore
+└── README.md
 ```
+
+### Descripción de las carpetas principales
+
+| Carpeta | Descripción |
+|----------|-------------|
+| `backend/apps/management` | Contiene los modelos, vistas, serializadores y lógica principal del sistema. |
+| `backend/restaurant` | Configuración general del proyecto Django. |
+| `backend/templates` | Plantillas HTML utilizadas por el backend. |
+| `frontend/src/api` | Funciones encargadas de consumir la API REST. |
+| `frontend/src/hooks` | Hooks personalizados que utilizan TanStack Query. |
+| `frontend/src/pages` | Páginas principales de la aplicación. |
+| `frontend/src/routes` | Definición de rutas públicas y protegidas. |
+| `frontend/src/components` | Componentes reutilizables del frontend. |
+| `frontend/src/utils` | Funciones auxiliares para autenticación y utilidades. |
 
 ---
-
-# Funcionalidades
-
-- Registro de usuarios
-- Inicio de sesión con JWT
-- Consulta del menú
-- Consulta de mesas
-- Creación de reservas
-- Visualización de reservas del usuario
-- Protección de rutas mediante autenticación
-
----
-
-# Instalación
-
-## Backend
-
-```bash
-cd backend
-
-python -m venv my_env
-
-source my_env/bin/activate
-
-pip install -r requirements.txt
-
-python manage.py migrate
-
-python manage.py runserver
-```
-
----
-
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
-
----
-
-# Variables de entorno
-
-Crear un archivo `.env` dentro de `frontend`.
-
-```
-VITE_API_URL=http://localhost:8000/api
-```
-
----
-
-# Arquitectura
-
-```
-React
-
-↓
-
-TanStack Query
-
-↓
-
-Django REST Framework
-
-↓
-
-Base de datos
-```
