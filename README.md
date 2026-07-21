@@ -116,3 +116,209 @@ DAW_Proyecto_final/
 | `frontend/src/utils` | Funciones auxiliares para autenticación, almacenamiento de tokens y otras utilidades. |
 
 ---
+
+# Requisitos
+
+Para ejecutar el proyecto localmente es necesario tener instalado:
+
+- Git
+- Python 3
+- pip
+- Node.js
+- npm
+
+Puede verificar las versiones instaladas mediante:
+
+```bash
+git --version
+python3 --version
+pip --version
+node --version
+npm --version
+```
+
+> En Windows puede utilizarse `python` en lugar de `python3`.
+
+---
+
+# Instalación local
+
+## 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/GusLinares17/DAW_Proyecto_final.git
+
+cd DAW_Proyecto_final
+```
+
+---
+
+## 2. Configurar el backend
+
+Ingresar al directorio del backend.
+
+```bash
+cd backend
+```
+
+### Crear el entorno virtual
+
+#### Linux / WSL
+
+```bash
+python3 -m venv my_env
+```
+
+#### Windows
+
+```bash
+python -m venv my_env
+```
+
+### Activar el entorno virtual
+
+#### Linux / WSL
+
+```bash
+source my_env/bin/activate
+```
+
+#### Windows (PowerShell)
+
+```powershell
+.\my_env\Scripts\Activate.ps1
+```
+
+#### Windows (CMD)
+
+```cmd
+my_env\Scripts\activate
+```
+
+---
+
+### Instalar las dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Aplicar migraciones
+
+```bash
+python manage.py migrate
+```
+
+---
+
+### Ejecutar el servidor
+
+```bash
+python manage.py runserver
+```
+
+El backend estará disponible en:
+
+```text
+http://127.0.0.1:8000/
+```
+
+La API REST estará disponible en:
+
+```text
+http://127.0.0.1:8000/api/
+```
+
+El panel de administración estará disponible en:
+
+```text
+http://127.0.0.1:8000/admin/
+```
+
+---
+
+## 3. Configurar el frontend
+
+Abrir una nueva terminal e ingresar al directorio del frontend.
+
+```bash
+cd frontend
+```
+
+### Instalar las dependencias
+
+```bash
+npm install
+```
+
+---
+
+### Crear el archivo de variables de entorno
+
+#### Linux / WSL
+
+```bash
+cp .env.example .env
+```
+
+#### Windows
+
+```cmd
+copy .env.example .env
+```
+
+Contenido del archivo `frontend/.env`:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000/api
+```
+
+---
+
+### Ejecutar el frontend
+
+```bash
+npm run dev
+```
+
+El frontend estará disponible normalmente en:
+
+```text
+http://localhost:5173/
+```
+
+---
+
+# Variables de entorno
+
+## Frontend
+
+| Variable | Descripción |
+|----------|-------------|
+| `VITE_API_URL` | Dirección base de la API REST utilizada por el frontend. |
+
+---
+
+## Backend
+
+El proyecto obtiene sus variables mediante `os.environ`.
+
+Durante el desarrollo local, si no existe la variable `DATABASE_URL`, Django utiliza automáticamente una base de datos SQLite (`db.sqlite3`).
+
+En producción se recomienda configurar, como mínimo, las siguientes variables:
+
+| Variable | Descripción |
+|----------|-------------|
+| `SECRET_KEY` | Clave secreta utilizada por Django. |
+| `DEBUG` | Activa o desactiva el modo de depuración. |
+| `DATABASE_URL` | Cadena de conexión hacia PostgreSQL. |
+| `FRONTEND_URL` | URL del frontend permitida mediante CORS. |
+| `DJANGO_SUPERUSER_USERNAME` | Usuario administrador inicial. |
+| `DJANGO_SUPERUSER_EMAIL` | Correo del administrador. |
+| `DJANGO_SUPERUSER_PASSWORD` | Contraseña del administrador. |
+
+> El backend no utiliza un archivo `.env`; las variables se leen directamente desde el entorno del sistema o desde Render.
+
+---
