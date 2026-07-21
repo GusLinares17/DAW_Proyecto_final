@@ -40,7 +40,7 @@ El backend fue desarrollado utilizando **Django REST Framework**, mientras que e
 ## Base de datos
 
 - SQLite (desarrollo local)
-- PostgreSQL / Supabase (producción)
+- PostgreSQL (producción, alojado en Supabase)
 
 ---
 
@@ -62,7 +62,7 @@ El backend fue desarrollado utilizando **Django REST Framework**, mientras que e
    SQLite / PostgreSQL (Supabase)
 ```
 
-El frontend consume los servicios expuestos por la API REST del backend. Django procesa las solicitudes, aplica la autenticación mediante JWT y administra el acceso a la base de datos.
+El frontend consume los recursos expuestos por la API REST del backend mediante solicitudes HTTP. Django REST Framework procesa las peticiones, aplica la autenticación mediante JSON Web Tokens (JWT) y administra el acceso a la base de datos.
 
 ---
 
@@ -103,14 +103,16 @@ DAW_Proyecto_final/
 
 | Carpeta | Descripción |
 |----------|-------------|
-| `backend/apps/management` | Contiene los modelos, vistas, serializadores y lógica principal del sistema. |
+| `backend/apps/management` | Contiene los modelos, serializadores, vistas, rutas y lógica principal de la aplicación. |
 | `backend/restaurant` | Configuración general del proyecto Django. |
 | `backend/templates` | Plantillas HTML utilizadas por el backend. |
 | `frontend/src/api` | Funciones encargadas de consumir la API REST. |
+| `frontend/src/components` | Componentes reutilizables del frontend. |
 | `frontend/src/hooks` | Hooks personalizados que utilizan TanStack Query. |
+| `frontend/src/layouts` | Estructuras visuales compartidas entre las páginas. |
 | `frontend/src/pages` | Páginas principales de la aplicación. |
 | `frontend/src/routes` | Definición de rutas públicas y protegidas. |
-| `frontend/src/components` | Componentes reutilizables del frontend. |
-| `frontend/src/utils` | Funciones auxiliares para autenticación y utilidades. |
+| `frontend/src/types` | Interfaces y tipos utilizados por TypeScript. |
+| `frontend/src/utils` | Funciones auxiliares para autenticación, almacenamiento de tokens y otras utilidades. |
 
 ---
