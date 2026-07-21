@@ -3,24 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabor Peruano - Backend</title>
+
+    <title>Sabor Peruano | Backend</title>
+
+    <style>
+        :root {
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            color: #2f2a24;
+            background-color: #f7f3ec;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f3ec;
+        }
+
+        .header {
+            padding: 24px 32px;
+            background-color: #fdfbf7;
+            border-bottom: 1px solid #eaeaea;
+            text-align: center;
+        }
+
+        .brand {
+            margin: 0;
+            color: #8b3a3a;
+            font-family: "Times New Roman", serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .main {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            width: min(720px, 100%);
+            padding: 48px 40px;
+            background-color: #fffaf2;
+            border: 1px solid #eadfce;
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(47, 42, 36, 0.1);
+            text-align: center;
+        }
+
+        .label {
+            margin: 0 0 12px;
+            color: #a94f2b;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            color: #7a2e1d;
+            font-family: "Times New Roman", serif;
+            font-size: clamp(2.4rem, 6vw, 4rem);
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #5f554b;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .main-links,
+        .technical-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .main-links {
+            margin-bottom: 34px;
+        }
+
+        .button,
+        .technical-button {
+            display: inline-block;
+            min-width: 170px;
+            padding: 13px 22px;
+            background-color: transparent;
+            border: 1px solid #8b3a3a;
+            border-radius: 2px;
+            color: #8b3a3a;
+            font-family: monospace;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition:
+                background-color 0.25s,
+                color 0.25s,
+                transform 0.2s;
+        }
+
+        .button:hover,
+        .technical-button:hover {
+            background-color: #8b3a3a;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .technical-section {
+            padding-top: 26px;
+            border-top: 1px solid #eadfce;
+        }
+
+        .technical-title {
+            margin: 0 0 16px;
+            color: #6f6255;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            padding: 22px 16px;
+            background-color: #2f2a24;
+            color: #f7f3ec;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 4px 0;
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 36px 22px;
+            }
+
+            .button,
+            .technical-button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <header class="header">
+        <p class="brand">Sabor Peruano</p>
+    </header>
 
-    <h1>Sabor Peruano</h1>
+    <main class="main">
+        <section class="card">
+            <p class="label">Backend de la aplicación</p>
 
-    <p>
-        Bienvenido al backend del sistema de gestión y reservas del restaurante.
-    </p>
+            <h1>Bienvenido</h1>
 
-    <hr>
+            <p class="description">
+                Este servidor contiene la API y el panel administrativo del
+                sistema de gestión y reservas de Sabor Peruano. Desde aquí
+                puede acceder a las principales páginas de la aplicación web.
+            </p>
 
-    <h3>Accesos rápidos</h3>
+            <div class="main-links">
+                <a
+                    class="button"
+                    href="https://daw-proyecto-final-navy.vercel.app/"
+                >
+                    Ir al frontend
+                </a>
 
-    <ul>
-        <li><a href="/api/">Ver API</a></li>
-        <li><a href="/admin/">Panel de administración</a></li>
-    </ul>
+                <a
+                    class="button"
+                    href="https://daw-proyecto-final-navy.vercel.app/menu"
+                >
+                    Ver la carta
+                </a>
 
+                <a
+                    class="button"
+                    href="https://daw-proyecto-final-navy.vercel.app/login"
+                >
+                    Iniciar sesión
+                </a>
+            </div>
+
+            <div class="technical-section">
+                <p class="technical-title">Accesos técnicos</p>
+
+                <div class="technical-links">
+                    <a
+                        class="technical-button"
+                        href="/api/"
+                    >
+                        API REST
+                    </a>
+
+                    <a
+                        class="technical-button"
+                        href="/admin/"
+                    >
+                        Administración
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>Sabor Peruano</strong></p>
+        <p>Backend desarrollado con Django y Django REST Framework</p>
+        <p>© 2026 · Arequipa, Perú</p>
+    </footer>
 </body>
 </html>
