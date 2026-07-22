@@ -3,7 +3,7 @@ import styles from '../styles/AdminReservationsPage.module.css';
 import { getAccessToken } from '../utils/auth';
 
 interface Customer { id: string; names: string; email: string; dni: string; }
-interface Table { id: string; number: string; capacity: number; }
+interface Table { id: string; number: string; capacity: number; location: string; }
 interface Reservation { 
     id: string; 
     reservation_date: string; 
