@@ -27,6 +27,7 @@ export interface LoginResponse {
   email?: string;
   dni?: string;
   phone?: string;
+  is_admin?: boolean;
 }
 
 export async function registerUser(data: RegisterData) {

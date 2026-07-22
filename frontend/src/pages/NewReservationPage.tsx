@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateReservation } from '../hooks/useReservation'
 import { useTables } from '../hooks/useTable'
-import styles from './NewReservationPage.module.css'
+import styles from '../styles/NewReservationPage.module.css'
 
 export function NewReservationPage() {
   const navigate = useNavigate()

@@ -4,6 +4,7 @@ from .CustomerViewSet import CustomerViewSet
 from .TableViewSet import TableViewSet
 from .ReservationViewSet import ReservationViewSet
 from .RegisterView import RegisterView
+from .AuthView import CustomTokenObtainPairView
 
 __all__ = [
     "MenuCategoryViewSet",
@@ -11,4 +12,5 @@ __all__ = [
     "CustomerViewSet",
     "TableViewSet",
     "ReservationViewSet",
+    "CustomTokenObtainPairView",
 ]

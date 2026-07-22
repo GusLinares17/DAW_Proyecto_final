@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteReservation } from '../api/reservationApi';
-import styles from './MyReservationsPage.module.css';
+import styles from '../styles/MyReservationsPage.module.css';
 
 export const MyReservationsPage = () => {
   const [reservations, setReservations] = useState<any[]>([]);
