@@ -85,6 +85,7 @@ export const Navbar = () => {
                 {isAdmin ? (
                   <>
                     <Link to="/admin/carta" onClick={() => setIsDropdownOpen(false)}>Modificar carta</Link>
+                    <Link to="/admin/reservas" onClick={() => setIsDropdownOpen(false)}>Modificar reservas</Link>
                     <button onClick={handleLogout}>Salir</button>
                   </>
                 ) : (

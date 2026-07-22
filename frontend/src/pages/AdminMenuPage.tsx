@@ -3,12 +3,12 @@ import { getAccessToken } from '../utils/auth';
 import styles from './AdminMenuPage.module.css';
 
 interface Category {
-    id: number;
+    id: string;
     name: string;
 }
 
 interface MenuItem {
-    id: number;
+    id: string;
     name: string;
     description: string;
     price: string | number;
@@ -21,7 +21,7 @@ export function AdminMenuPage() {
     const [items, setItems] = useState<MenuItem[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editingId, setEditingId] = useState<string | null>(null);
 
     const [formData, setFormData] = useState({
         name: '',
