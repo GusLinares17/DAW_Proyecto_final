@@ -7,3 +7,4 @@ class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
         fields = '__all__'
+        read_only_fields = ('creator', 'modifier', 'created', 'modified')

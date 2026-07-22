@@ -91,7 +91,7 @@ export function AdminMenuPage() {
             method,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${getAccessToken()}`
             },
             body: JSON.stringify(formData)
         });
@@ -100,7 +100,19 @@ export function AdminMenuPage() {
             setIsModalOpen(false);
             fetchItems();
         } else {
-            alert("Error al guardar el plato. Verifica los permisos de administrador.");
+            const errorData = await response.json();
+            console.error("Error del servidor:", errorData);
+
+            let errorMessage = "Error al guardar el plato:\n";
+            if (typeof errorData === 'object' && errorData !== null) {
+                for (const key in errorData) {
+                    const value = errorData[key];
+                    errorMessage += `- ${key}: ${Array.isArray(value) ? value.join(', ') : value}\n`;
+                }
+            } else {
+                errorMessage = "Ocurrió un error inesperado en el servidor.";
+            }
+            alert(errorMessage);
         }
     };
 

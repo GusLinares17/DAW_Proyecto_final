@@ -2,87 +2,264 @@ import { useEffect, useState } from 'react';
 import { getAccessToken } from '../utils/auth';
 import styles from './AdminMenuPage.module.css';
 
+interface Customer {
+    id: string;
+    names: string;
+    email: string;
+    dni: string;
+}
+
+interface Table {
+    id: string;
+    number: string;
+    capacity: number;
+}
+
 interface Reservation {
     id: string;
-    date: string;
-    time: string;
-    number_of_people: number;
-    status: string;
-    customer?: { names: string; email: string };
-    table_detail?: { number: string; capacity: number };
+    reservation_date: string;
+    reservation_time: string;
+    guests: number;
+    status: boolean;
+    customer: any;
+    table: string;
+    table_detail?: Table;
 }
 
 export function AdminReservationsPage() {
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [tables, setTables] = useState<Table[]>([]);
     const [reservations, setReservations] = useState<Reservation[]>([]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<string>('');
+    const [editingResId, setEditingResId] = useState<string | null>(null);
+
+    const [formData, setFormData] = useState({
+        reservation_date: '',
+        reservation_time: '',
+        guests: '',
+        status: false,
+        table: ''
+    });
+
     const API_URL = import.meta.env.VITE_API_URL;
-    const token = getAccessToken();
+
+    const getHeaders = () => ({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+    });
 
     useEffect(() => {
-        fetchReservations();
+        fetchData();
     }, []);
 
-    const fetchReservations = async () => {
-        const response = await fetch(`${API_URL}/reservations/`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+    const fetchData = async () => {
+        const headers = getHeaders();
+        const [resCust, resTab, resRes] = await Promise.all([
+            fetch(`${API_URL}/customers/`, { headers }),
+            fetch(`${API_URL}/tables/`, { headers }),
+            fetch(`${API_URL}/reservations/`, { headers })
+        ]);
+
+        if (resCust.ok) setCustomers(await resCust.json());
+        if (resTab.ok) setTables(await resTab.json());
+        if (resRes.ok) setReservations(await resRes.json());
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        if (name === 'status') {
+            setFormData(prev => ({ ...prev, [name]: value === 'true' }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+    };
+
+    const openModal = (customerId: string, res?: Reservation) => {
+        setSelectedCustomer(customerId);
+        if (res) {
+            setEditingResId(res.id);
+            setFormData({
+                reservation_date: res.reservation_date,
+                reservation_time: res.reservation_time,
+                guests: res.guests.toString(),
+                status: res.status,
+                table: res.table
+            });
+        } else {
+            setEditingResId(null);
+            setFormData({ reservation_date: '', reservation_time: '', guests: '', status: false, table: '' });
+        }
+        setIsModalOpen(true);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const payload = {
+            ...formData,
+            customer: selectedCustomer
+        };
+
+        const url = editingResId ? `${API_URL}/reservations/${editingResId}/` : `${API_URL}/reservations/`;
+        const method = editingResId ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method,
+            headers: getHeaders(),
+            body: JSON.stringify(payload)
         });
+
         if (response.ok) {
-            const data = await response.json();
-            setReservations(data);
+            setIsModalOpen(false);
+            fetchData();
+        } else {
+            const errorData = await response.json();
+            console.error("Error del servidor:", errorData);
+
+            let errorMessage = "Error al guardar la reserva:\n";
+
+            if (typeof errorData === 'object' && errorData !== null) {
+                for (const key in errorData) {
+                    const value = errorData[key];
+                    if (key === 'non_field_errors') {
+                        errorMessage += `- ${value.join(', ')}\n`;
+                    } else {
+                        errorMessage += `- ${key}: ${Array.isArray(value) ? value.join(', ') : value}\n`;
+                    }
+                }
+            } else {
+                errorMessage = "Ocurrió un error inesperado en el servidor.";
+            }
+
+            alert(errorMessage);
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm("¿Estás seguro de cancelar/eliminar esta reserva?")) return;
+        if (!window.confirm("¿Seguro que deseas eliminar esta reserva?")) return;
 
         const response = await fetch(`${API_URL}/reservations/${id}/`, {
             method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: getHeaders()
         });
 
-        if (response.ok) {
-            fetchReservations();
-        } else {
-            alert("Error al eliminar la reserva.");
-        }
+        if (response.ok) fetchData();
+    };
+
+    const getCustomerReservations = (customerId: string) => {
+        return reservations.filter(res => {
+            const resCustomerId = typeof res.customer === 'object' ? res.customer?.id : res.customer;
+            return resCustomerId === customerId;
+        });
     };
 
     return (
         <section className={styles.adminSection}>
             <div className={styles.adminHeader}>
-                <h1>Administrar Todas las Reservas</h1>
+                <h1>Gestión de Reservas por Usuario</h1>
             </div>
 
             <table className={styles.adminTable}>
                 <thead>
                     <tr>
-                        <th>ID / Cliente</th>
-                        <th>Fecha y Hora</th>
-                        <th>Personas</th>
-                        <th>Estado</th>
-                        <th>Mesa</th>
+                        <th>Cliente</th>
+                        <th>Correo</th>
+                        <th>Reservas Activas</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {reservations.map(res => (
-                        <tr key={res.id}>
-                            <td>
-                                <strong>{res.customer?.names || 'Usuario Admin/Desconocido'}</strong><br />
-                                <small>{res.id.split('-')[0]}</small>
-                            </td>
-                            <td>{res.date} a las {res.time}</td>
-                            <td>{res.number_of_people}</td>
-                            <td>{res.status}</td>
-                            <td>{res.table_detail ? `Mesa ${res.table_detail.number}` : 'Sin asignar'}</td>
-                            <td>
-                                <button className={styles.deleteBtn} onClick={() => handleDelete(res.id)}>
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                    {customers.map(customer => {
+                        const userReservations = getCustomerReservations(customer.id);
+
+                        return (
+                            <tr key={customer.id}>
+                                <td>
+                                    <strong>{customer.names}</strong><br />
+                                </td>
+                                <td>{customer.email}</td>
+                                <td>
+                                    {userReservations.length === 0 ? (
+                                        <span style={{ color: 'gray' }}>Sin reservas</span>
+                                    ) : (
+                                        userReservations.map(res => (
+                                            <div key={res.id} style={{ marginBottom: '10px', borderBottom: '1px solid #eee', paddingBottom: '5px' }}>
+                                                {res.reservation_date} a las {res.reservation_time} <br />
+                                                {res.guests} personas <br />
+                                                Mesa: {res.table_detail ? res.table_detail.number : 'Sin asignar'} | Estado: {res.status ? 'Confirmada' : 'Pendiente'} <br />
+
+                                                <div style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
+                                                    <button className={styles.editBtn} onClick={() => openModal(customer.id, res)} style={{ padding: '2px 5px', fontSize: '12px' }}>
+                                                        Editar
+                                                    </button>
+                                                    <button className={styles.deleteBtn} onClick={() => handleDelete(res.id)} style={{ padding: '2px 5px', fontSize: '12px' }}>
+                                                        Eliminar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+                                </td>
+                                <td style={{ verticalAlign: 'top' }}>
+                                    <button className={styles.saveBtn} onClick={() => openModal(customer.id)}>
+                                        + Nueva Reserva
+                                    </button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
+
+            {isModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>{editingResId ? 'Editar Reserva' : 'Crear Reserva para Cliente'}</h2>
+                        <form onSubmit={handleSubmit} className={styles.adminForm}>
+
+                            <div className={styles.formGroup}>
+                                <label>Fecha</label>
+                                <input type="date" name="reservation_date" value={formData.reservation_date} onChange={handleInputChange} required />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Hora</label>
+                                <input type="time" name="reservation_time" value={formData.reservation_time} onChange={handleInputChange} required />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Número de Personas</label>
+                                <input type="number" name="guests" value={formData.guests} onChange={handleInputChange} required min="1" />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Mesa</label>
+                                <select name="table" value={formData.table} onChange={handleInputChange} required>
+                                    <option value="">Seleccione una mesa</option>
+                                    {tables.map(table => (
+                                        <option key={table.id} value={table.id}>Mesa {table.number} (Cap: {table.capacity})</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Estado de Reserva</label>
+                                <select name="status" value={formData.status.toString()} onChange={handleInputChange}>
+                                    <option value="false">Pendiente</option>
+                                    <option value="true">Confirmada</option>
+                                </select>
+                            </div>
+
+                            <div className={styles.modalActions}>
+                                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                                <button type="submit" className={styles.saveBtn}>{editingResId ? 'Actualizar' : 'Guardar'}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
