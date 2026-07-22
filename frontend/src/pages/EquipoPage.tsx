@@ -1,4 +1,4 @@
-import styles from './EquipoPage.module.css';
+import styles from '../styles/EquipoPage.module.css';
 
 export const EquipoPage = () => {
     return (

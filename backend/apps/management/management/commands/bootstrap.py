@@ -45,7 +45,6 @@ class Command(BaseCommand):
         return user
 
     def create_categories(self, admin_user):
-        # Se añadió una categoría nueva para mayor variedad
         data = [
             ('ENTRADAS', 'Platos ligeros para iniciar.'),
             ('SOPAS Y CHUPES', 'Tradición en cada cucharada con recetas ancestrales.'),
@@ -74,7 +73,6 @@ class Command(BaseCommand):
         return categories
 
     def create_menu_items(self, admin_user, categories):
-        # Se amplió el catálogo de platos con especialidades y detalles
         data = [
             # ENTRADAS
             ('PAPA A LA HUANCAÍNA', 'Papa sancochada cubierta con una cremosa y ligeramente picante salsa de ají amarillo y queso fresco.', Decimal('18.00'), 'ENTRADAS'),
@@ -124,15 +122,12 @@ class Command(BaseCommand):
                 self.stdout.write(f'Plato creado: {name}')
 
     def create_tables(self, admin_user):
-        # Se añadieron más mesas con distintas capacidades para el sistema de reservas
         data = [
             (1, 2, 'Salón principal'),
             (2, 4, 'Salón principal'),
             (3, 4, 'Terraza'),
             (4, 6, 'Terraza'),
-            (5, 2, 'Ventana'),
             (6, 8, 'Salón principal - VIP'),
-            (7, 4, 'Ventana'),
             (8, 2, 'Terraza'),
             (9, 6, 'Salón privado'),
             (10, 4, 'Salón principal'),

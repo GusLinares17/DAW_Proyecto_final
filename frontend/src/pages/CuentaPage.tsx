@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './CuentaPage.module.css';
+import styles from '../styles/CuentaPage.module.css';
 
 export const CuentaPage = () => {
     const navigate = useNavigate();

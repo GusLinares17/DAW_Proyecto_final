@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateReservation } from '../api/reservationApi';
 import { getTables } from '../api/tableApi';
-import styles from './EditReservationPage.module.css';
+import styles from '../styles/EditReservationPage.module.css';
 
 export const EditReservationPage = () => {
     const { id } = useParams();

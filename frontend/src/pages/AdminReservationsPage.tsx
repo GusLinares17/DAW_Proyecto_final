@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import styles from '../styles/AdminReservationsPage.module.css';
 import { getAccessToken } from '../utils/auth';
-import styles from './AdminMenuPage.module.css';
 
 interface Customer { id: string; names: string; email: string; dni: string; }
 interface Table { id: string; number: string; capacity: number; }

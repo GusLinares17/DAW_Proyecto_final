@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { useLogin } from '../hooks/useLogin'
-import { saveTokens } from '../utils/auth'
+import { useLogin } from '../hooks/useLogin';
+import { saveTokens } from '../utils/auth';
 
 export function LoginPage() {
   const navigate = useNavigate()

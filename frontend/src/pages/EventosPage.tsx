@@ -1,4 +1,4 @@
-import styles from './EventosPage.module.css';
+import styles from '../styles/EventosPage.module.css';
 
 export const EventosPage = () => {
     return (

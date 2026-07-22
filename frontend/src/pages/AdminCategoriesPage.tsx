@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import styles from '../styles/AdminCategoriesPage.module.css';
 import { getAccessToken } from '../utils/auth';
-import styles from './AdminMenuPage.module.css';
 
 interface Category {
     id: string;

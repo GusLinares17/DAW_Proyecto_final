@@ -1,4 +1,4 @@
-import styles from './CocinaPage.module.css';
+import styles from '../styles/CocinaPage.module.css';
 
 export const CocinaPage = () => {
   return (

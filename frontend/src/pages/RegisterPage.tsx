@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRegister } from '../hooks/useRegister'
-import styles from './RegisterPage.module.css'
+import styles from '../styles/RegisterPage.module.css'
 
 export function RegisterPage() {
   const navigate = useNavigate()
