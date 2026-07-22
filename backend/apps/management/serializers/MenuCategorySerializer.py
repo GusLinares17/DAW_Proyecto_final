@@ -8,6 +8,7 @@ class MenuCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuCategory
         fields = '__all__'
+        read_only_fields = ('creator', 'modifier', 'created', 'modified')
 
 
 class MenuCategoryDetailSerializer(serializers.ModelSerializer):

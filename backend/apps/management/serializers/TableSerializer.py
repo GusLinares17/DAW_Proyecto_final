@@ -7,3 +7,4 @@ class TableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Table
         fields = '__all__'
+        read_only_fields = ('creator', 'modifier', 'created', 'modified')
