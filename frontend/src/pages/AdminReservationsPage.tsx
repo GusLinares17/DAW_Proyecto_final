@@ -177,27 +177,34 @@ export function AdminReservationsPage() {
                         return (
                             <tr key={customer.id}>
                                 <td>
-                                    <strong>{customer.names}</strong><br />
-                                </td>
-                                <td>{customer.email}</td>
-                                <td>
                                     {userReservations.length === 0 ? (
-                                        <span style={{ color: 'gray' }}>Sin reservas</span>
+                                        <span style={{ color: 'gray', fontStyle: 'italic' }}>Sin reservas activas</span>
                                     ) : (
                                         userReservations.map(res => (
-                                            <div key={res.id} style={{ marginBottom: '10px', borderBottom: '1px solid #eee', paddingBottom: '5px' }}>
-                                                {res.reservation_date} a las {res.reservation_time} <br />
-                                                {res.guests} personas <br />
-                                                Mesa: {res.table_detail ? res.table_detail.number : 'Sin asignar'} | Estado: {res.status ? 'Confirmada' : 'Pendiente'} <br />
+                                            <div key={res.id} className={styles.reservationCard}>
 
-                                                <div style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
-                                                    <button className={styles.editBtn} onClick={() => openModal(customer.id, res)} style={{ padding: '2px 5px', fontSize: '12px' }}>
-                                                        Editar
+                                                <div className={styles.reservationHeader}>
+                                                    <span>📅 {res.reservation_date}</span>
+                                                    <span className={`${styles.badge} ${res.status ? styles.badgeConfirmada : styles.badgePendiente}`}>
+                                                        {res.status ? 'Confirmada' : 'Pendiente'}
+                                                    </span>
+                                                </div>
+
+                                                <div className={styles.reservationDetails}>
+                                                    <span>🕒 Hora: <strong>{res.reservation_time}</strong></span>
+                                                    <span>👥 Personas: <strong>{res.guests}</strong></span>
+                                                    <span>🍽️ Mesa: <strong>{res.table_detail ? res.table_detail.number : 'Sin asignar'}</strong></span>
+                                                </div>
+
+                                                <div className={styles.actionButtons}>
+                                                    <button className={styles.editBtn} onClick={() => openModal(customer.id, res)}>
+                                                        Modificar
                                                     </button>
-                                                    <button className={styles.deleteBtn} onClick={() => handleDelete(res.id)} style={{ padding: '2px 5px', fontSize: '12px' }}>
-                                                        Eliminar
+                                                    <button className={styles.deleteBtn} onClick={() => handleDelete(res.id)}>
+                                                        Cancelar
                                                     </button>
                                                 </div>
+
                                             </div>
                                         ))
                                     )}

@@ -140,78 +140,89 @@ export function AdminMenuPage() {
                 <button className={styles.addBtn} onClick={() => openModal()}>+ Añadir Plato</button>
             </div>
 
-            <table className={styles.adminTable}>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Disponible</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {items.map(item => (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>S/ {item.price}</td>
-                            <td>{item.available ? 'Sí' : 'No'}</td>
-                            <td>
-                                <button className={styles.editBtn} onClick={() => openModal(item)}>Editar</button>
-                                <button className={styles.deleteBtn} onClick={() => handleDelete(item.id)}>Eliminar</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {categories.map(category => {
+                const categoryItems = items.filter(item => item.category.toString() === category.id.toString());
 
-            {isModalOpen && (
-                <div className={styles.modalOverlay}>
-                    <div className={styles.modalContent}>
-                        <h2>{editingId ? 'Editar Plato' : 'Nuevo Plato'}</h2>
-                        <form onSubmit={handleSubmit} className={styles.adminForm}>
+                if (categoryItems.length === 0) return null;
 
-                            <div className={styles.formGroup}>
-                                <label>Nombre del plato</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label>Descripción</label>
-                                <textarea name="description" value={formData.description} onChange={handleInputChange} required />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label>Precio (S/)</label>
-                                <input type="number" step="0.01" name="price" value={formData.price} onChange={handleInputChange} required />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label>Categoría</label>
-                                <select name="category" value={formData.category} onChange={handleInputChange} required>
-                                    <option value="">Seleccione una categoría</option>
-                                    {categories.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className={styles.checkboxGroup}>
-                                <label>
-                                    <input type="checkbox" name="available" checked={formData.available} onChange={handleInputChange} />
-                                    Disponible para ordenar
-                                </label>
-                            </div>
-
-                            <div className={styles.modalActions}>
-                                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancelar</button>
-                                <button type="submit" className={styles.saveBtn}>Guardar</button>
-                            </div>
-                        </form>
+                return (
+                    <div key={category.id} className={styles.categorySection}>
+                        <h2 className={styles.categoryTitle}>{category.name}</h2>
+                        <table className={styles.adminTable}>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Disponible</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categoryItems.map(item => (
+                                    <tr key={item.id}>
+                                        <td><strong>{item.name}</strong><br /><small style={{ color: 'gray' }}>{item.description}</small></td>
+                                        <td>S/ {item.price}</td>
+                                        <td>{item.available ? 'Sí' : 'No'}</td>
+                                        <td className={styles.actionButtons}>
+                                            <button className={styles.editBtn} onClick={() => openModal(item)}>Editar</button>
+                                            <button className={styles.deleteBtn} onClick={() => handleDelete(item.id)}>Eliminar</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            )}
+                );
+            })}
+
+            {
+                isModalOpen && (
+                    <div className={styles.modalOverlay}>
+                        <div className={styles.modalContent}>
+                            <h2>{editingId ? 'Editar Plato' : 'Nuevo Plato'}</h2>
+                            <form onSubmit={handleSubmit} className={styles.adminForm}>
+
+                                <div className={styles.formGroup}>
+                                    <label>Nombre del plato</label>
+                                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label>Descripción</label>
+                                    <textarea name="description" value={formData.description} onChange={handleInputChange} required />
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label>Precio (S/)</label>
+                                    <input type="number" step="0.01" name="price" value={formData.price} onChange={handleInputChange} required />
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label>Categoría</label>
+                                    <select name="category" value={formData.category} onChange={handleInputChange} required>
+                                        <option value="">Seleccione una categoría</option>
+                                        {categories.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className={styles.checkboxGroup}>
+                                    <label>
+                                        <input type="checkbox" name="available" checked={formData.available} onChange={handleInputChange} />
+                                        Disponible para ordenar
+                                    </label>
+                                </div>
+
+                                <div className={styles.modalActions}>
+                                    <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                                    <button type="submit" className={styles.saveBtn}>Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )
+            }
         </section>
     );
 }
