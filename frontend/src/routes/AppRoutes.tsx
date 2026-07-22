@@ -3,8 +3,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout } from '../layouts/MainLayout'
 import { ProtectedRoute } from './ProtectedRoute'
 
+import { AdminCategoriesPage } from '../pages/AdminCategoriesPage'
 import { AdminMenuPage } from '../pages/AdminMenuPage'
 import { AdminReservationsPage } from '../pages/AdminReservationsPage'
+import { AdminTablesPage } from '../pages/AdminTablesPage'
 import { CocinaPage } from '../pages/CocinaPage'
 import { CuentaPage } from '../pages/CuentaPage'
 import { EditReservationPage } from '../pages/EditReservationPage'
@@ -54,9 +56,17 @@ export default function AppRoutes() {
               path="/admin/carta"
               element={<AdminMenuPage />}
             />
-            <Route 
-              path="/admin/reservas" 
-              element={<AdminReservationsPage />} 
+            <Route
+              path="/admin/reservas"
+              element={<AdminReservationsPage />}
+            />
+            <Route
+              path="/admin/mesas"
+              element={<AdminTablesPage />}
+            />
+            <Route
+              path="/admin/categorias"
+              element={<AdminCategoriesPage />}
             />
           </Route>
 

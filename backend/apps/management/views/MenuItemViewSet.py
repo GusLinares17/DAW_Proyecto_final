@@ -13,4 +13,4 @@ class MenuItemViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(modifier=self.request.user)
+        serializer.save(modifier=self.request.user.id)

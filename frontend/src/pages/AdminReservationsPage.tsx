@@ -171,11 +171,17 @@ export function AdminReservationsPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map(customer => {
+                    {(Array.isArray(customers) ? customers : []).map(customer => {
                         const userReservations = getCustomerReservations(customer.id);
 
                         return (
                             <tr key={customer.id}>
+                                <td>
+                                    <strong>{customer.names}</strong><br />
+                                </td>
+
+                                <td>{customer.email}</td>
+
                                 <td>
                                     {userReservations.length === 0 ? (
                                         <span style={{ color: 'gray', fontStyle: 'italic' }}>Sin reservas activas</span>
@@ -209,7 +215,8 @@ export function AdminReservationsPage() {
                                         ))
                                     )}
                                 </td>
-                                <td style={{ verticalAlign: 'top' }}>
+
+                                <td style={{ verticalAlign: 'top', width: '180px' }}>
                                     <button className={styles.saveBtn} onClick={() => openModal(customer.id)}>
                                         + Nueva Reserva
                                     </button>
