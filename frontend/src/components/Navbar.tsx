@@ -5,7 +5,7 @@ import '../App.css';
 export const Navbar = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false); // <-- Nuevo estado para el rol
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const checkAuth = () => {
@@ -16,7 +16,7 @@ export const Navbar = () => {
       try {
         const user = JSON.parse(storedUser);
         setUserName(user.first_name || user.username || 'Usuario');
-        setIsAdmin(user.is_admin || false); // <-- Leemos el rol desde el objeto guardado
+        setIsAdmin(user.is_admin || false);
       } catch (error) {
         setUserName(null);
         setIsAdmin(false);

@@ -39,7 +39,8 @@ export function LoginPage() {
           mother_surname: data.mother_surname,
           email: data.email,
           dni: data.dni,
-          phone: data.phone
+          phone: data.phone,
+          is_admin: data.is_admin
         }))
 
         window.dispatchEvent(new Event('auth-change'));
