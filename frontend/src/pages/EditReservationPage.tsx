@@ -42,7 +42,7 @@ export const EditReservationPage = () => {
             setNotification({ show: true, message: 'Reserva modificada exitosamente.', type: 'success' });
             setTimeout(() => navigate('/mis-reservas'), 1500);
         } catch (error) {
-            setNotification({ show: true, message: 'Hubo un error al intentar modificar la reserva.', type: 'error' });
+            setNotification({ show: true, message: 'Hubo un error al intentar modificar la reserva. Comprueba la capacidad de la mesa.', type: 'error' });
             setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
         }
     };
@@ -60,10 +60,14 @@ export const EditReservationPage = () => {
                 <h1 className={styles.title}>Modificar Reserva</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
-                        <label className={styles.label}>Mesa</label>
+                        <label className={styles.label}>Mesa y Zona</label>
                         <select name="table" value={formData.table} onChange={handleChange} required className={styles.input}>
                             <option value="">Seleccione una mesa</option>
-                            {tables.map(t => <option key={t.id} value={t.id}>Mesa {t.number} · {t.capacity} personas</option>)}
+                            {tables.filter(t => t.available !== false).map(t => (
+                                <option key={t.id} value={t.id}>
+                                    Mesa {t.number} - {t.location || 'Sin asignar'} (Capacidad: {t.capacity} personas)
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className={styles.inputGroup}>

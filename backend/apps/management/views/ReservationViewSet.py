@@ -20,7 +20,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
         if user.is_staff:
             customer_id = self.request.data.get('customer')
             customer = get_object_or_404(Customer, id=customer_id)
-            serializer.save(customer=customer, creator=user.id.id)
+            serializer.save(customer=customer, creator=user)
         else:
             serializer.save(customer=user.customer_profile, creator=user)
 

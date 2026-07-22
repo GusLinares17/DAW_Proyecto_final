@@ -12,6 +12,7 @@ export function AdminCategoriesPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [notification, setNotification] = useState({ show: false, message: '', type: '' });
 
     const [formData, setFormData] = useState({
         name: '',
@@ -29,6 +30,11 @@ export function AdminCategoriesPage() {
         if (response.ok) {
             setCategories(await response.json());
         }
+    };
+
+    const showToast = (message: string, type: 'success' | 'error') => {
+        setNotification({ show: true, message, type });
+        setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -52,34 +58,63 @@ export function AdminCategoriesPage() {
         const url = editingId ? `${API_URL}/menu-categories/${editingId}/` : `${API_URL}/menu-categories/`;
         const method = editingId ? 'PUT' : 'POST';
 
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getAccessToken()}`
-            },
-            body: JSON.stringify(formData)
-        });
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getAccessToken()}`
+                },
+                body: JSON.stringify(formData)
+            });
 
-        if (response.ok) {
-            setIsModalOpen(false);
-            fetchCategories();
+            if (response.ok) {
+                setIsModalOpen(false);
+                fetchCategories();
+                showToast(`Categoría ${editingId ? 'actualizada' : 'creada'} exitosamente.`, 'success');
+            } else {
+                const errorData = await response.json();
+                let errorMessage = "Error al guardar:\n";
+                if (typeof errorData === 'object' && errorData !== null) {
+                    for (const key in errorData) {
+                        errorMessage += `- ${key}: ${Array.isArray(errorData[key]) ? errorData[key].join(', ') : errorData[key]}\n`;
+                    }
+                }
+                showToast(errorMessage, 'error');
+            }
+        } catch (error) {
+            showToast("Hubo un problema de conexión con el servidor.", 'error');
         }
     };
 
     const handleDelete = async (id: string) => {
         if (!window.confirm("¿Seguro que deseas eliminar esta categoría? Podría afectar a los platos asignados a ella.")) return;
 
-        const response = await fetch(`${API_URL}/menu-categories/${id}/`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${getAccessToken()}` }
-        });
+        try {
+            const response = await fetch(`${API_URL}/menu-categories/${id}/`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${getAccessToken()}` }
+            });
 
-        if (response.ok) fetchCategories();
+            if (response.ok) {
+                fetchCategories();
+                showToast("Categoría eliminada exitosamente.", 'success');
+            } else {
+                showToast("Error al eliminar la categoría.", 'error');
+            }
+        } catch (error) {
+            showToast("Error de conexión al intentar eliminar.", 'error');
+        }
     };
 
     return (
         <section className={styles.adminSection}>
+            {notification.show && (
+                <div className={`${styles.notification} ${notification.type === 'success' ? styles.success : styles.error}`}>
+                    {notification.type === 'success' ? '✓' : '⚠'} {notification.message}
+                </div>
+            )}
+
             <div className={styles.adminHeader}>
                 <h1>Administrar Categorías</h1>
                 <button className={styles.addBtn} onClick={() => openModal()}>+ Nueva Categoría</button>
@@ -122,7 +157,7 @@ export function AdminCategoriesPage() {
                             </div>
                             <div className={styles.modalActions}>
                                 <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancelar</button>
-                                <button type="submit" className={styles.saveBtn}>Guardar</button>
+                                <button type="submit" className={styles.saveBtn}>{editingId ? 'Actualizar' : 'Guardar'}</button>
                             </div>
                         </form>
                     </div>
