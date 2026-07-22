@@ -5,6 +5,7 @@ import '../App.css';
 export const Navbar = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false); // <-- Nuevo estado para el rol
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const checkAuth = () => {
@@ -15,11 +16,14 @@ export const Navbar = () => {
       try {
         const user = JSON.parse(storedUser);
         setUserName(user.first_name || user.username || 'Usuario');
+        setIsAdmin(user.is_admin || false); // <-- Leemos el rol desde el objeto guardado
       } catch (error) {
         setUserName(null);
+        setIsAdmin(false);
       }
     } else {
       setUserName(null);
+      setIsAdmin(false);
     }
   };
 
@@ -38,6 +42,7 @@ export const Navbar = () => {
     localStorage.removeItem('refresh');
     localStorage.removeItem('user');
     setUserName(null);
+    setIsAdmin(false);
     setIsDropdownOpen(false);
     navigate('/');
   };
@@ -57,12 +62,15 @@ export const Navbar = () => {
       </ul>
 
       <div className="navbar-auth">
-        <Link
-          to={userName ? "/reservations/new" : "/login"}
-          className="btn-reservar"
-        >
-          Reservar
-        </Link>
+        {!isAdmin && (
+          <Link
+            to={userName ? "/reservations/new" : "/login"}
+            className="btn-reservar"
+          >
+            Reservar
+          </Link>
+        )}
+        
         {userName ? (
           <div className="user-menu-container">
             <button
@@ -74,9 +82,18 @@ export const Navbar = () => {
 
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <Link to="/cuenta" onClick={() => setIsDropdownOpen(false)}>Cuenta</Link>
-                <Link to="/my-reservations" onClick={() => setIsDropdownOpen(false)}>Mis reservas</Link>
-                <button onClick={handleLogout}>Salir</button>
+                {isAdmin ? (
+                  <>
+                    <Link to="/admin/carta" onClick={() => setIsDropdownOpen(false)}>Modificar carta</Link>
+                    <button onClick={handleLogout}>Salir</button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/cuenta" onClick={() => setIsDropdownOpen(false)}>Cuenta</Link>
+                    <Link to="/my-reservations" onClick={() => setIsDropdownOpen(false)}>Mis reservas</Link>
+                    <button onClick={handleLogout}>Salir</button>
+                  </>
+                )}
               </div>
             )}
           </div>
